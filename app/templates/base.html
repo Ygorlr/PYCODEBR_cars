@@ -66,14 +66,30 @@
         background-color: #999;
     }
 
+    .teste-red {
+        background-color: red;
+        border-radius: 10px;
+    }
   </style>
 </head>
 <body>
   <header>
     <nav>
       <ul>
-        <li><a href="{% url 'cars_list' %}">Carros</a></li>
-        <li><a href="{% url 'new_car' %}">Cadastrar Carro</a></li>
+        {% if user.is_authenticated %}
+          <li>Hello, {{ user.username }}</li>
+          <li><a href="{% url 'new_car' %}">Register Car</a></li>
+        {% endif %}
+        {% if not user.is_authenticated %}
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Sign In</a></li>
+        {% endif%}
+
+        <li><a href="{% url 'cars_list' %}">Cars</a></li>
+
+        {% if user.is_authenticated %}
+          <li class="teste-red"><a href="{% url 'logout' %}">Sign Out</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
